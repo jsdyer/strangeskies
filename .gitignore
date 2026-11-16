@@ -1,0 +1,4 @@
+/dist/
+/strange-skies-*/
+__pycache__/
+*.pyc

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#17201c">
+  <meta name="description" content="Explore Transport Canada CADORS aviation occurrence records by event, year, location, and aircraft.">
+  <title>Strange Skies Canada · CoolCode</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+<a class="skip" href="#explore">Skip to search</a>
+<header class="mast">
+  <div class="wrap mast-inner">
+    <a href="https://coolcode.ca/" class="brand"><span aria-hidden="true">&gt;_</span> CoolCode.ca</a>
+    <a href="#sources" class="nav-link">Data &amp; sources ↓</a>
+  </div>
+</header>
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-content">
+        <p class="eyebrow">CANADIAN AVIATION OCCURRENCE ARCHIVE</p>
+        <h1>Strange Skies<span> Canada.</span></h1>
+        <p class="intro">Find unusual observations, emergencies, and everyday incidents reported to Transport Canada. Follow a report number to the original system for its narrative.</p>
+        <a class="primary" href="#explore">Search the archive ↓</a>
+      </div>
+      <aside class="source-panel" aria-label="Archive coverage">
+        <div class="scope" aria-hidden="true"><span></span><i></i><b></b></div>
+        <div><p class="eyebrow">CADORS ARCHIVE</p><strong id="archive-count">—</strong><p id="coverage">Checking snapshot</p></div>
+      </aside>
+    </div>
+  </section>
+  <section id="explore" class="wrap workspace" aria-labelledby="search-heading">
+    <div class="search-card">
+      <h2 id="search-heading">Search occurrence records</h2>
+      <form id="search-form" role="search">
+        <label for="query">Location, airfield, aircraft, event or CADORS number</label>
+        <div class="input-row"><input type="search" id="query" name="q" maxlength="160" placeholder="Try Iqaluit, CYFB, laser, or 2004C2314" autocomplete="off"><button id="reset" class="light-button" type="button">Clear filters</button></div>
+        <p class="hint" id="search-help">Search covers published fields. Use quotes for a phrase. Try all years for historic records.</p>
+        <div class="filters">
+          <label for="year">Occurrence year<select id="year" disabled><option value="">All years</option></select></label>
+          <label for="region">Province, territory or country<select id="region" disabled><option value="">All recorded locations</option></select></label>
+          <label for="kind">Report type<select id="kind" disabled><option value="">All types</option></select></label>
+          <label for="event">Event or category<select id="event" disabled><option value="">All events</option></select></label>
+        </div>
+      </form>
+      <div class="discover" aria-label="Suggested searches">
+        <span>Explore</span>
+        <button type="button" data-discover="Weather balloon, meteor, rocket, CIRVIS/UFO" data-mode="event">Unusual observations</button>
+        <button type="button" data-discover="Declared emergency/priority" data-mode="event">Declared emergencies</button>
+        <button type="button" data-discover="Laser interference" data-mode="event">Laser interference</button>
+        <button type="button" data-discover="Iqaluit">Iqaluit</button>
+        <button type="button" data-discover="Resolute">Resolute Bay</button>
+      </div>
+    </div>
+    <div class="results-layout">
+      <section aria-labelledby="results-heading">
+        <div class="results-header"><div><p class="eyebrow">REPORTS</p><h2 id="results-heading" tabindex="-1">Occurrences</h2><p id="status" role="status" aria-live="polite">Loading the search index…</p></div></div>
+        <div id="results"></div>
+        <nav id="pagination" class="pagination" aria-label="Result pages" hidden><button id="previous" type="button" class="light-button">← Previous</button><span id="page-number"></span><button id="next" type="button" class="light-button">Next →</button></nav>
+      </section>
+      <aside id="sources" class="notebook">
+        <p class="eyebrow">READING THE RECORDS</p>
+        <h2>What gets reported?</h2>
+        <p>CADORS logs preliminary aviation occurrences. The combined weather balloon, meteor, rocket and CIRVIS/UFO event label covers several kinds of reports. It does not establish what was seen.</p>
+        <h3>Where are the narratives?</h3>
+        <p>The downloadable tables contain locations, categories, events and aircraft details. Use the CADORS number in Transport Canada's query for the narrative where one is available.</p>
+        <div class="source-links">
+          <a href="https://wwwapps.tc.gc.ca/Saf-Sec-Sur/2/CADORS-SCREAQ/q.aspx?lang=eng" target="_blank" rel="noopener">Official CADORS query ↗</a>
+          <a href="https://wwwapps.tc.gc.ca/Saf-Sec-Sur/2/CADORS-SCREAQ/ws.aspx?lang=eng" target="_blank" rel="noopener">Official narrative search ↗</a>
+          <a href="https://open.canada.ca/data/en/dataset/a348c1d1-2392-4595-b5e2-c6a244a7e87f" target="_blank" rel="noopener">Official open dataset ↗</a>
+        </div>
+        <dl id="source-status"></dl>
+      </aside>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap footer-inner"><strong>Strange Skies Canada</strong><p>Source: Transport Canada. Contains information licensed under the <a href="https://open.canada.ca/en/open-government-licence-canada">Open Government Licence – Canada</a>.</p><a href="https://github.com/jsdyer/strangeskies">Source code ↗</a></div></footer>
+<dialog id="details" aria-labelledby="detail-title"><div class="dialog-header"><div><p class="eyebrow">CADORS OCCURRENCE</p><h2 id="detail-title"></h2></div><form method="dialog"><button class="light-button">Close ×</button></form></div><div id="detail-body"></div></dialog>
+<noscript><div class="wrap"><p>Enable JavaScript for search or <a href="https://wwwapps.tc.gc.ca/Saf-Sec-Sur/2/CADORS-SCREAQ/q.aspx?lang=eng">visit the original CADORS query</a>.</p></div></noscript>
+</body>
+</html>
