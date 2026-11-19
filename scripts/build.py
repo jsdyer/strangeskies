@@ -83,12 +83,19 @@ def download(name, directory):
 def imported_rows(path, fields):
     with path.open(encoding="utf-8-sig", newline="") as handle:
         reader = csv.DictReader(handle)
-        if not reader.fieldnames or not set(fields).issubset(reader.fieldnames):
-            raise ValueError(f"{path.name}: expected CADORS columns were not found")
+        # Transport Canada publishes both mixed-case and uppercase exports. One
+        # edition also spells the date column OCCURENCEDATE (one R).
+        names = {name.casefold(): name for name in reader.fieldnames or ()}
+        if "occurencedate" in names:
+            names.setdefault("occurrencedate", names["occurencedate"])
+        missing = [field for field in fields if field.casefold() not in names]
+        if missing:
+            raise ValueError(f"{path.name}: missing CADORS columns: {', '.join(missing)}")
+        keys = [names[field.casefold()] for field in fields]
         for item in reader:
-            if None in item or any(item[key] is None for key in fields):
+            if None in item or any(item[key] is None for key in keys):
                 raise ValueError(f"{path.name}: malformed CSV at line {reader.line_num}")
-            values = tuple(clean(item[key]) for key in fields)
+            values = tuple(clean(item[key]) for key in keys)
             if not values[0]:
                 raise ValueError(f"{path.name}: missing CADORS number at line {reader.line_num}")
             yield values
