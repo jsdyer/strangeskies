@@ -1,0 +1,22 @@
+{
+  "id": "strangeskies",
+  "title": "Strange Skies Canada",
+  "description": "Search aviation occurrence reports by location, year and event.",
+  "category": "places",
+  "tags": [
+    "cadors",
+    "airports",
+    "flight",
+    "emergency"
+  ],
+  "icon": "plane",
+  "url": "/strangeskies/",
+  "source": "https://github.com/jsdyer/strangeskies",
+  "hosting": "project",
+  "access": "browser",
+  "data_info": {
+    "mode": "snapshot",
+    "detail": "Transport Canada’s CADORS reports describe aviation occurrences, events and the aircraft involved.",
+    "cadence": "Daily"
+  }
+}

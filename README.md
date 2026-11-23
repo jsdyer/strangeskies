@@ -1,5 +1,9 @@
 # Strange Skies Canada
 
+<!-- coolcode:guide -->
+Search a CADORS number or select a year and event category, then copy the report number into Transport Canada’s original query. The bulk files omit narratives, and the combined balloon, meteor, rocket and CIRVIS/UFO category does not establish an explanation.
+<!-- /coolcode:guide -->
+
 An independent CoolCode.ca explorer for Transport Canada civil aviation occurrence reports.
 
 - Search by CADORS number, date, airfield, location, event, aircraft or operator. The search checks English and French fields where the source supplies both.
@@ -34,3 +38,18 @@ python3 -m http.server 8080 --directory dist
 For an offline rebuild, put the official files in a directory under their names with the `CADORS_` prefix removed, and pass `--inputs /path/to/downloads`. HTTP source modification dates are unavailable in this mode. To place the build elsewhere, pass `--output /path/to/output`.
 
 The GitHub Actions workflow builds and publishes the static `dist/` folder to GitHub Pages, with daily refreshes and a manual run option in **Actions**. An incomplete download or incompatible source schema fails the build before publication. Only the browser-ready output is deployed. A browser worker searches gzip files split by occurrence year, and retains a small cache of requested years. The site needs a current browser and no installation or runtime backend.
+
+## Regression checks
+
+Pull requests that change code run logic tests and Chromium checks at this tool’s
+Pages subpath, including a real control interaction and 320/390-pixel layouts.
+Documentation-only pull requests skip this workflow. Publication waits for the
+same checks. Test data stays in a separate job and is never packaged for Pages.
+
+```sh
+node --test tests/*.test.mjs
+python3 tests/build_fixture.py
+python3 -m pip install -r tests/browser-requirements.txt
+python3 -m playwright install chromium
+python3 tests/browser_smoke.py
+```

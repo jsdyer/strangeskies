@@ -1,0 +1,33 @@
+name: Application regression checks
+on:
+  workflow_call:
+  pull_request:
+    paths-ignore:
+      - '**/*.md'
+      - 'LICENSE'
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - run: node --test tests/*.test.mjs
+      - name: Build isolated browser test edition
+        run: python3 tests/build_fixture.py
+      - name: Install browser test dependencies
+        run: |
+          python3 -m pip install -r tests/browser-requirements.txt
+          python3 -m playwright install --with-deps chromium
+      - name: Check application in Chromium
+        run: python3 tests/browser_smoke.py
